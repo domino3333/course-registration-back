@@ -7,9 +7,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RegistrationController {
 
-    @GetMapping("/api/text")
-    public String asdf(){
-
-        return "sdf";
-    }
 }
