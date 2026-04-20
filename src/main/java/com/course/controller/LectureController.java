@@ -2,11 +2,14 @@ package com.course.controller;
 
 
 import com.course.domain.Lecture;
-import com.course.mapper.LectureMapper;
 import com.course.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,20 +20,20 @@ import java.util.List;
 @RequestMapping("/api/lecture")
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class LectureController {
 
     private final LectureService lectureService;
 
     @GetMapping
-    public ResponseEntity<?> getLectureList(){
-
-        List<Lecture> list = null;
+    public ResponseEntity<?> getLectureList() {
+        List<Lecture> list;
         try {
             list = lectureService.getLectureList();
+            log.info("list:" + list);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("getLectureList 에러발생");
         }
-        log.info("list:"+ list);
 
         return ResponseEntity.ok(list);
     }
