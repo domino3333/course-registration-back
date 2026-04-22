@@ -4,9 +4,9 @@ package com.course.domain;
 import lombok.Data;
 
 @Data
-public class Student {
+public class Member {
     
-    private Long StudentNo;
+    private Long memberNo;
     private String name;
     private String code; //학번
 
