@@ -1,2 +1,0 @@
-jwt.secret=course-backend-jwt-secret-key-course-backend-jwt-secret-key
-jwt.expiration=3600000
