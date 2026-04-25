@@ -25,6 +25,8 @@ public class JwtTokenProvider {
         this.expiration = expiration;
     }
 
+
+    //email == username
     public String createToken(String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);

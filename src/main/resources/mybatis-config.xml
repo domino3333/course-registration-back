@@ -8,6 +8,6 @@
 	</settings>
 	<!-- TypeAlias로 맵핑 파일에서 반복적으로 사용될 패키지의 이름을 정의한다. -->
 	<typeAliases>
-		<package name="com.shop.domain"/>
+		<package name="com.course.domain"/>
 	</typeAliases>
 </configuration>
