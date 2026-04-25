@@ -8,7 +8,7 @@ public class Member {
     
     private Long memberNo;
     private String name;
-    private Integer id;
+    private String id;
     private String gender;
     private String password;
     private String email;

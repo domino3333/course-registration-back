@@ -2,8 +2,9 @@ package com.course.controller;
 
 
 import com.course.domain.Member;
-import com.course.dto.LoginRequest;
-import com.course.dto.LoginResponse;
+import com.course.dto.auth.LoginRequest;
+import com.course.dto.auth.LoginResponse;
+import com.course.dto.auth.SignUpRequest;
 import com.course.security.JwtTokenProvider;
 import com.course.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,24 @@ public class AuthController {
         }
 
         String token = jwtTokenProvider.createToken(request.getEmail());
-
+        log.info("로그인성공");
         return ResponseEntity.ok(new LoginResponse(token));
+    }
+
+    @PostMapping("/signUp")
+    public ResponseEntity<?> signUp(@RequestBody SignUpRequest request){
+
+        log.info("signUp 진입");
+        log.info("request:"+request.getGender());
+
+        try {
+            memberService.signUp(request);
+        } catch (Exception e) {
+            log.info("signUp 메서드 에러");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패");
+        }
+
+        return ResponseEntity.ok("회원가입 성공");
     }
 }

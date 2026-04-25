@@ -1,4 +1,4 @@
-package com.course.dto;
+package com.course.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

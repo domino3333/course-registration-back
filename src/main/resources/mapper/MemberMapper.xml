@@ -6,4 +6,9 @@
     <select id="findMemberByEmail" resultType="Member">
         select * from member where email = #{email}
     </select>
+
+    <insert id="signUp">
+        insert into member(member_no,name,id,gender,password,email,code)
+        values(seq_member.nextval,#{name},#{id},#{gender},#{password},#{email},#{code})
+    </insert>
 </mapper>

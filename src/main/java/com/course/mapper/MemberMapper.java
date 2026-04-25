@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MemberMapper {
 
     Member findMemberByEmail(String email) throws Exception;
+    void signUp(Member member) throws Exception;
 }
