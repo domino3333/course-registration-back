@@ -29,4 +29,10 @@ public class RegistrationServiceImpl implements RegistrationService {
         log.info("서비스에서 받은 list: "+list);
         return list;
     }
+
+    @Override
+    public void registerLecture(String email, long lectureNo) throws Exception {
+        Member member = memberMapper.findMemberByEmail(email);
+        registrationMapper.registerLecture(member.getMemberNo(),lectureNo);
+    }
 }

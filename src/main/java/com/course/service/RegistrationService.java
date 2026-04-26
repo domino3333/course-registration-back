@@ -7,4 +7,6 @@ import java.util.List;
 public interface RegistrationService {
 
     List<Registration> getRegistrationList(String email) throws Exception;
+
+    void registerLecture(String email, long lectureNo) throws Exception;
 }

@@ -6,4 +6,10 @@
     <select id="getRegistrationList">
         select * from registration where member_no = #{memberNo}
     </select>
+
+    <insert id="registerLecture">
+        insert into registration(registration_no,member_no,lecture_no,created_at)
+        values(seq_registration.nextval,#{memberNo},#{lectureNo},systimestamp)
+
+    </insert>
 </mapper>

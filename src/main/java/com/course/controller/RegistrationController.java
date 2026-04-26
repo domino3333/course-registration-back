@@ -23,10 +23,17 @@ public class RegistrationController {
 
     private final RegistrationService registrationService;
 
-    @PostMapping
+    @PostMapping("/{lectureNo}")
     public ResponseEntity<?> registerLecture(Authentication authentication, @PathVariable long lectureNo){
 
-        return null;
+        try {
+            registrationService.registerLecture(authentication.getName(),lectureNo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("등록 실패");
+
+        }
+        return ResponseEntity.ok("수강신청 성공");
     }
 
     @GetMapping
