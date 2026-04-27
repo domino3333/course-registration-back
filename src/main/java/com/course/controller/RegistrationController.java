@@ -2,11 +2,9 @@ package com.course.controller;
 
 
 import com.course.domain.Registration;
-import com.course.service.MemberService;
 import com.course.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -49,4 +47,13 @@ public class RegistrationController {
         return ResponseEntity.ok(list);
 
     }
+
+    @DeleteMapping("/{registrationNo}")
+    public ResponseEntity<?> deleteRegistration(Authentication authentication,@PathVariable long registrationNo){
+        //todo 수강신청한 강의를 드랍할 때 쓰이는 메서드
+        //registrationService.cancelRegistration();
+    }
+
+
+
 }
