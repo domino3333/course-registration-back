@@ -9,4 +9,6 @@ public interface RegistrationService {
     List<Registration> getRegistrationList(String email) throws Exception;
 
     void registerLecture(String email, long lectureNo) throws Exception;
+
+    void cancelRegistration(String email, long registrationNo) throws Exception;
 }

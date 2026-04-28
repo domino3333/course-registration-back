@@ -11,4 +11,6 @@ public interface RegistrationMapper {
     List<Registration> getRegistrationList(long memberNo) throws Exception;
 
     void registerLecture(long memberNo, long lectureNo) throws Exception;
+
+    void cancelRegistration(Long memberNo, long registrationNo) throws Exception;
 }

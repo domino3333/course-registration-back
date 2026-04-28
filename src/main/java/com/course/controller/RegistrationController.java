@@ -50,10 +50,14 @@ public class RegistrationController {
 
     @DeleteMapping("/{registrationNo}")
     public ResponseEntity<?> deleteRegistration(Authentication authentication,@PathVariable long registrationNo){
-        //todo 수강신청한 강의를 드랍할 때 쓰이는 메서드
-        //registrationService.cancelRegistration();
+        log.info("deleteRegistration진입, auth:" + authentication.getName());
+        try {
+            registrationService.cancelRegistration(authentication.getName(),registrationNo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("수강 취소 실패");
+        }
+        return ResponseEntity.ok("수강 취소 성공");
     }
-
-
 
 }

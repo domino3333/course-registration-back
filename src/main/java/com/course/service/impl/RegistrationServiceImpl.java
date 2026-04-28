@@ -35,4 +35,12 @@ public class RegistrationServiceImpl implements RegistrationService {
         Member member = memberMapper.findMemberByEmail(email);
         registrationMapper.registerLecture(member.getMemberNo(),lectureNo);
     }
+
+    @Override
+    public void cancelRegistration(String email, long registrationNo) throws Exception {
+        Member member = memberMapper.findMemberByEmail(email);
+        registrationMapper.cancelRegistration(member.getMemberNo(),registrationNo);
+
+
+    }
 }

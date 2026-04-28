@@ -12,4 +12,11 @@
         values(seq_registration.nextval,#{memberNo},#{lectureNo},systimestamp)
 
     </insert>
+
+    <delete id="cancelRegistration">
+        delete
+        from registration
+        where member_no = #{memberNo}
+          and registration_no = #{registrationNo}
+    </delete>
 </mapper>
