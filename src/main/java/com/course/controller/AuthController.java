@@ -9,13 +9,14 @@ import com.course.security.JwtTokenProvider;
 import com.course.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -63,5 +64,19 @@ public class AuthController {
         }
 
         return ResponseEntity.ok("회원가입 성공");
+    }
+
+
+    @GetMapping
+    public ResponseEntity<?> fetchMe(Authentication authentication){
+        Member member;
+        try {
+            log.info("fetchMe 진입");
+             member = memberService.findMemberByEmail(authentication.getName());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("fetchMe 오류 발생");
+        }
+
+        return ResponseEntity.ok(member);
     }
 }
