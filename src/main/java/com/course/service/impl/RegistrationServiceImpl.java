@@ -2,6 +2,7 @@ package com.course.service.impl;
 
 import com.course.domain.Member;
 import com.course.domain.Registration;
+import com.course.dto.registration.RegistrationResponse;
 import com.course.mapper.MemberMapper;
 import com.course.mapper.RegistrationMapper;
 import com.course.service.MemberService;
@@ -19,7 +20,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final RegistrationMapper registrationMapper;
     private final MemberMapper memberMapper;
-    private final int AVAILABLE = 1, UNAVAILABLE = 0 ;
+    public static final int AVAILABLE = 1, UNAVAILABLE = 0 ;
 
 
     @Override
@@ -41,13 +42,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 
     @Override
-    public List<Registration> getRegistrationList(String email) throws Exception {
-
+    public List<RegistrationResponse> getRegistrationList(String email) throws Exception {
         Member member = memberMapper.findMemberByEmail(email);
-        log.info("서비스에서 memberNo: "+member.getMemberNo());
-        List<Registration> list = registrationMapper.getRegistrationList(member.getMemberNo());
-        log.info("서비스에서 받은 list: "+list);
-        return list;
+        return registrationMapper.getRegistrationList(member.getMemberNo());
     }
 
 

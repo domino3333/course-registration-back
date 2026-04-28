@@ -3,8 +3,8 @@
 <mapper namespace="com.course.mapper.RegistrationMapper">
 
 
-    <select id="getRegistrationList">
-        select * from registration where member_no = #{memberNo}
+    <select id="getRegistrationList" resultType="com.course.dto.registration.RegistrationResponse">
+        select * from lecture L join registration R on L.lecture_no = R.lecture_no where member_no = #{memberNo}
     </select>
 
     <insert id="registerLecture">

@@ -2,7 +2,9 @@ package com.course.controller;
 
 
 import com.course.domain.Registration;
+import com.course.dto.registration.RegistrationResponse;
 import com.course.service.RegistrationService;
+import com.course.service.impl.RegistrationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,12 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.course.service.impl.RegistrationServiceImpl.UNAVAILABLE;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/api/registration")
 public class RegistrationController {
-
 
     private final RegistrationService registrationService;
 
@@ -26,7 +29,7 @@ public class RegistrationController {
 
         try {
             int check = registrationService.registerLecture(authentication.getName(),lectureNo);
-            if(check == 0){
+            if(check == UNAVAILABLE){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 수강신청된 강의입니다.");
             }
         } catch (Exception e) {
@@ -40,7 +43,7 @@ public class RegistrationController {
     @GetMapping
     public ResponseEntity<?> getRegistrationList(Authentication authentication){
 
-        List<Registration> list;
+        List<RegistrationResponse> list;
         try {
             log.info("getRegistrationList진입, auth:" + authentication.getName());
             list = registrationService.getRegistrationList(authentication.getName());
