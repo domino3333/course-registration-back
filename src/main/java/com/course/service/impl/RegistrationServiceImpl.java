@@ -19,6 +19,26 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final RegistrationMapper registrationMapper;
     private final MemberMapper memberMapper;
+    private final int AVAILABLE = 1, UNAVAILABLE = 0 ;
+
+
+    @Override
+    public int registerLecture(String email, long lectureNo) throws Exception {
+        Member member = memberMapper.findMemberByEmail(email);
+
+        //이미 신청이 완료된 강의일 경우 튕겨내야 함
+        int count = registrationMapper.checkIsAlreadyRegistered(member.getMemberNo(),lectureNo);
+        if(count >0) {
+            //이미 신청된 강의일 경우
+            return UNAVAILABLE;
+        }else{
+            registrationMapper.registerLecture(member.getMemberNo(),lectureNo);
+            return AVAILABLE;
+        }
+
+    }
+
+
 
     @Override
     public List<Registration> getRegistrationList(String email) throws Exception {
@@ -30,11 +50,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         return list;
     }
 
-    @Override
-    public void registerLecture(String email, long lectureNo) throws Exception {
-        Member member = memberMapper.findMemberByEmail(email);
-        registrationMapper.registerLecture(member.getMemberNo(),lectureNo);
-    }
+
 
     @Override
     public void cancelRegistration(String email, long registrationNo) throws Exception {

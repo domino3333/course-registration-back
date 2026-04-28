@@ -19,4 +19,8 @@
         where member_no = #{memberNo}
           and registration_no = #{registrationNo}
     </delete>
+
+    <select id="checkIsAlreadyRegistered">
+        select count(*) from registration where member_no = #{memberNo} and lecture_no = #{lectureNo}
+    </select>
 </mapper>

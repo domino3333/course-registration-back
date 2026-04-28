@@ -13,4 +13,6 @@ public interface RegistrationMapper {
     void registerLecture(long memberNo, long lectureNo) throws Exception;
 
     void cancelRegistration(Long memberNo, long registrationNo) throws Exception;
+
+    int checkIsAlreadyRegistered(Long memberNo, long lectureNo) throws Exception;
 }

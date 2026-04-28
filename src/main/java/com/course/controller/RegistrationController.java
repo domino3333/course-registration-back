@@ -25,10 +25,13 @@ public class RegistrationController {
     public ResponseEntity<?> registerLecture(Authentication authentication, @PathVariable long lectureNo){
 
         try {
-            registrationService.registerLecture(authentication.getName(),lectureNo);
+            int check = registrationService.registerLecture(authentication.getName(),lectureNo);
+            if(check == 0){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 수강신청된 강의입니다.");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("등록 실패");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("registerLecture 메서드 중 에러 발생");
 
         }
         return ResponseEntity.ok("수강신청 성공");
