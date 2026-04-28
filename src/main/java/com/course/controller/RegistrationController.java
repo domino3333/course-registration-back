@@ -49,7 +49,7 @@ public class RegistrationController {
     }
 
     @DeleteMapping("/{registrationNo}")
-    public ResponseEntity<?> deleteRegistration(Authentication authentication,@PathVariable long registrationNo){
+    public ResponseEntity<?> cancelRegistration(Authentication authentication,@PathVariable long registrationNo){
         log.info("deleteRegistration진입, auth:" + authentication.getName());
         try {
             registrationService.cancelRegistration(authentication.getName(),registrationNo);
