@@ -11,4 +11,6 @@ public interface LectureMapper {
     List<Lecture> getLectureList() throws Exception;
 
     void increaseCurrentEnrollment(long lectureNo) throws Exception;
+
+    void decreaseCurrentEnrollment(long registrationNo) throws Exception;
 }

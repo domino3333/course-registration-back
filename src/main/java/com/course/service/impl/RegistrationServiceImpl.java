@@ -8,6 +8,7 @@ import com.course.mapper.MemberMapper;
 import com.course.mapper.RegistrationMapper;
 import com.course.service.MemberService;
 import com.course.service.RegistrationService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 
     @Override
+    @Transactional
     public int registerLecture(String email, long lectureNo) throws Exception {
         Member member = memberMapper.findMemberByEmail(email);
 
@@ -54,9 +56,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 
     @Override
+    @Transactional
     public void cancelRegistration(String email, long registrationNo) throws Exception {
         Member member = memberMapper.findMemberByEmail(email);
+        // hard delete 이기 때문에 아예 삭제가 되기 전에 먼저 숫자를 감소시키고 삭제해야 함 순서가 중요
+        lectureMapper.decreaseCurrentEnrollment(registrationNo);
         registrationMapper.cancelRegistration(member.getMemberNo(),registrationNo);
+
 
 
     }

@@ -11,4 +11,11 @@
         update lecture set currentEnrollment = currentEnrollment + 1 where lecture_no = #{lectureNo}
     </update>
 
+    <!--넘어오는 값이 registration_no라서 서브쿼리 만들기-->
+    <update id="decreaseCurrentEnrollment">
+        update lecture set currentEnrollment = currentEnrollment-1
+            where lecture_no =
+                  (select lecture_no from registration where registration_no = #{registrationNo})
+    </update>
+
 </mapper>
