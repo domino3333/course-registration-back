@@ -11,5 +11,6 @@ public class Lecture {
     private String professor;
     private Integer capacity;
     private Integer credit; //학점
+    private Integer currentEnrollment;
 
 }
