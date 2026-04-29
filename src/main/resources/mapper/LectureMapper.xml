@@ -6,4 +6,9 @@
     <select id="getLectureList">
         select * from Lecture
     </select>
+
+    <update id="increaseCurrentEnrollment">
+        update lecture set currentEnrollment = currentEnrollment + 1 where lecture_no = #{lectureNo}
+    </update>
+
 </mapper>

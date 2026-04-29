@@ -13,6 +13,8 @@
 
     </insert>
 
+
+
     <delete id="cancelRegistration">
         delete
         from registration

@@ -9,4 +9,6 @@ import java.util.List;
 public interface LectureMapper {
 
     List<Lecture> getLectureList() throws Exception;
+
+    void increaseCurrentEnrollment(long lectureNo) throws Exception;
 }

@@ -3,6 +3,7 @@ package com.course.service.impl;
 import com.course.domain.Member;
 import com.course.domain.Registration;
 import com.course.dto.registration.RegistrationResponse;
+import com.course.mapper.LectureMapper;
 import com.course.mapper.MemberMapper;
 import com.course.mapper.RegistrationMapper;
 import com.course.service.MemberService;
@@ -21,6 +22,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final RegistrationMapper registrationMapper;
     private final MemberMapper memberMapper;
     public static final int AVAILABLE = 1, UNAVAILABLE = 0 ;
+    private final LectureMapper lectureMapper;
 
 
     @Override
@@ -34,6 +36,8 @@ public class RegistrationServiceImpl implements RegistrationService {
             return UNAVAILABLE;
         }else{
             registrationMapper.registerLecture(member.getMemberNo(),lectureNo);
+            //현재 인원 증가
+            lectureMapper.increaseCurrentEnrollment(lectureNo);
             return AVAILABLE;
         }
 
