@@ -20,6 +20,13 @@
 
     </insert>
 
+    <delete id="deleteCartItem">
+        delete
+        from cart_item
+        where cart_no = (select cart_no from cart where member_no
+                                                            = (select member_no from member where email = #{email}))
+          and lecture_no = #{lectureNo}
+    </delete>
 
 
 </mapper>

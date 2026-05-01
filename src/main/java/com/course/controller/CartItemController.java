@@ -1,12 +1,9 @@
 package com.course.controller;
 
 
-import com.course.domain.CartItem;
 import com.course.dto.cart.CartItemResponse;
-import com.course.service.CartService;
 import com.course.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,7 +13,6 @@ import com.course.service.CartItemService;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -50,16 +46,21 @@ public class CartItemController {
             cartItemService.addToCart(email,lectureNo);
         } catch (Exception e) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("addToCart실패");
-
         }
-
         return ResponseEntity.ok("장바구니에 아이템 추가 성공");
-
     }
 
-
-
-    //@DeleteMapping("/{lectureNo}")
+    @DeleteMapping("/{lectureNo}")
+    public ResponseEntity<?> deleteCartItem(Authentication authentication, @PathVariable long lectureNo){
+        String email = authentication.getName();
+        log.info("deleteItem진입, email:"+email);
+        try {
+            cartItemService.deleteCartItem(email,lectureNo);
+        } catch (Exception e) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("deleteCartItem실패");
+        }
+        return ResponseEntity.ok("장바구니의 아이템 삭제 성공");
+    }
 
 
 
