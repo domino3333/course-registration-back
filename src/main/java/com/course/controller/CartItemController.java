@@ -2,6 +2,7 @@ package com.course.controller;
 
 
 import com.course.domain.CartItem;
+import com.course.dto.cart.CartItemResponse;
 import com.course.service.CartService;
 import com.course.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class CartItemController {
         //todo로그인한 사용자의 장바구니 목록 가져오기
         String email = authentication.getName();
         log.info("getCartItemList에서 로그인한 사용자의 이메일:"+email);
-        List<CartItem> list = null;
+        List<CartItemResponse> list = null;
         try {
             list = cartItemService.getCartItemList(email);
         } catch (Exception e) {
@@ -48,10 +49,11 @@ public class CartItemController {
         try {
             cartItemService.addToCart(email,lectureNo);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("addToCart실패");
+
         }
 
-        return null;
+        return ResponseEntity.ok("장바구니에 아이템 추가 성공");
 
     }
 

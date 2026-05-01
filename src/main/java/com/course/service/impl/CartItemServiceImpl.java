@@ -1,6 +1,7 @@
 package com.course.service.impl;
 
 import com.course.domain.CartItem;
+import com.course.dto.cart.CartItemResponse;
 import com.course.mapper.CartItemMapper;
 import com.course.service.CartItemService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class CartItemServiceImpl implements CartItemService {
     private final CartItemMapper cartItemMapper;
 
     @Override
-    public List<CartItem> getCartItemList(String email) throws Exception {
+    public List<CartItemResponse> getCartItemList(String email) throws Exception {
         return cartItemMapper.getCartItemList(email);
     }
 
