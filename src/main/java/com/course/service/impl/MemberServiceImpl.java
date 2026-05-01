@@ -2,8 +2,10 @@ package com.course.service.impl;
 
 import com.course.domain.Member;
 import com.course.dto.auth.SignUpRequest;
+import com.course.mapper.CartMapper;
 import com.course.mapper.MemberMapper;
 import com.course.service.MemberService;
+import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +17,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
+    private final CartMapper cartMapper;
 
     @Override
     public Member findMemberByEmail(String email) throws Exception {
@@ -23,6 +26,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void signUp(SignUpRequest request) throws Exception {
         Member member = new Member();
         String encodedPassword = passwordEncoder.encode(request.getPassword());
@@ -34,6 +38,7 @@ public class MemberServiceImpl implements MemberService {
         member.setPassword(encodedPassword);
 
         memberMapper.signUp(member);
+        cartMapper.createCart(request.getEmail());
 
 
 

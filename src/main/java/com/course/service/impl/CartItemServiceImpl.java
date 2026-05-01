@@ -16,9 +16,12 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public List<CartItem> getCartItemList(String email) throws Exception {
-        
-
         return cartItemMapper.getCartItemList(email);
+    }
+
+    @Override
+    public void addToCart(String email, long lectureNo) throws Exception {
+        cartItemMapper.addToCart(email,lectureNo);
     }
 
 }

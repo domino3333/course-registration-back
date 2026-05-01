@@ -9,6 +9,5 @@ import java.util.List;
 @Mapper
 public interface CartItemMapper {
     List<CartItem> getCartItemList(String email) throws Exception;
-
-
+    void addToCart(String email, long lectureNo) throws Exception;
 }

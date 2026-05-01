@@ -9,6 +9,17 @@
           join lecture L on L.lecture_no = CI.lecture_no where M.email = #{email}
     </select>
 
+    <insert id="addToCart">
+        insert into cart_item(cart_item_no, cart_no, lecture_no)
+        values (seq_cart_item.nextval,
+                (select cart_no
+                 from member M
+                          join cart C on M.member_no = C.member_no
+                 where M.email = #{email}),
+                #{lectureNo})
+
+    </insert>
+
 
 
 </mapper>

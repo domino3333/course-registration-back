@@ -2,15 +2,14 @@ package com.course.controller;
 
 
 import com.course.domain.CartItem;
+import com.course.service.CartService;
+import com.course.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.course.service.CartItemService;
 
@@ -26,6 +25,7 @@ import java.util.List;
 public class CartItemController {
 
     private final CartItemService cartItemService;
+    private final MemberService memberService;
 
     @GetMapping
     public ResponseEntity<?> getCartItemList(Authentication authentication){
@@ -40,6 +40,22 @@ public class CartItemController {
         }
         return ResponseEntity.ok(list);
     }
+
+    @PostMapping("/{lectureNo}")
+    public ResponseEntity<?> addToCart(Authentication authentication, @PathVariable long lectureNo){
+        String email = authentication.getName();
+        log.info("addToCart진입, email:"+email);
+        try {
+            cartItemService.addToCart(email,lectureNo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+
+    }
+
+
 
     //@DeleteMapping("/{lectureNo}")
 
