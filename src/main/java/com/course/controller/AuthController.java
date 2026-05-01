@@ -29,7 +29,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 
 
         Member member = null;
@@ -40,7 +40,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("login에러");
         }
 
-        if(!passwordEncoder.matches(request.getPassword(),member.getPassword())){
+        if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 일치하지 않습니다.");
         }
 
@@ -50,10 +50,10 @@ public class AuthController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest request){
+    public ResponseEntity<?> signUp(@RequestBody SignUpRequest request) {
 
         log.info("signUp 진입");
-        log.info("request:"+request.getGender());
+        log.info("request:" + request.getGender());
 
         try {
             memberService.signUp(request);
@@ -68,11 +68,11 @@ public class AuthController {
 
 
     @GetMapping
-    public ResponseEntity<?> fetchMe(Authentication authentication){
+    public ResponseEntity<?> fetchMe(Authentication authentication) {
         Member member;
         try {
             log.info("fetchMe 진입");
-             member = memberService.findMemberByEmail(authentication.getName());
+            member = memberService.findMemberByEmail(authentication.getName());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("fetchMe 오류 발생");
         }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.course.mapper.CartItemMapper">
+
+    <select id="getCartItemList">
+        select L.lecture_no,L.title,L.professor,L.capacity,L.currentEnrollment,L.credit from member M
+          join cart C on M.member_no = C.member_no
+          join cart_item CI on C.cart_no = CI.cart_no
+          join lecture L on L.lecture_no = CI.lecture_no where M.email = #{email}
+    </select>
+
+
+
+</mapper>
