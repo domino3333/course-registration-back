@@ -22,7 +22,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final RegistrationMapper registrationMapper;
     private final MemberMapper memberMapper;
-    public static final int AVAILABLE = 1, UNAVAILABLE = 0 ;
+    public static final int FAIL = 0,SUCCESS = 1, FULL = 2;
     private final LectureMapper lectureMapper;
 
 
@@ -31,16 +31,19 @@ public class RegistrationServiceImpl implements RegistrationService {
     public int registerLecture(String email, long lectureNo) throws Exception {
         Member member = memberMapper.findMemberByEmail(email);
 
-        //이미 신청이 완료된 강의일 경우 튕겨내야 함
+        //이미 신청이 완료된 강의인지 확인
         int count = registrationMapper.checkIsAlreadyRegistered(member.getMemberNo(),lectureNo);
         if(count >0) {
             //이미 신청된 강의일 경우
-            return UNAVAILABLE;
+            return FAIL;
         }else{
-            registrationMapper.registerLecture(member.getMemberNo(),lectureNo);
-            //현재 인원 증가
-            lectureMapper.increaseCurrentEnrollment(lectureNo);
-            return AVAILABLE;
+            if(lectureMapper.checkCapacityAndIncreaseCurrentEnrollment(lectureNo)==1){
+                //정원 초과인지 체크하면서 현 인원을 +1해서 실행됐다면 1 리턴
+                registrationMapper.registerLecture(member.getMemberNo(),lectureNo);
+                return SUCCESS;
+            }
+            //실패시 정원초과 리턴
+            return FULL;
         }
 
     }

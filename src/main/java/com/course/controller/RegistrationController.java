@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.course.service.impl.RegistrationServiceImpl.UNAVAILABLE;
+import static com.course.service.impl.RegistrationServiceImpl.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,8 +29,10 @@ public class RegistrationController {
 
         try {
             int check = registrationService.registerLecture(authentication.getName(),lectureNo);
-            if(check == UNAVAILABLE){
+            if(check == FAIL){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 수강신청된 강의입니다.");
+            }else if(check == FULL){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("정원이 초과된 강의입니다.");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,8 +7,9 @@
         select * from Lecture
     </select>
 
-    <update id="increaseCurrentEnrollment">
-        update lecture set currentEnrollment = currentEnrollment + 1 where lecture_no = #{lectureNo}
+    <update id="checkCapacityAndIncreaseCurrentEnrollment">
+        update lecture set currentEnrollment = currentEnrollment + 1
+            where lecture_no = #{lectureNo} and currentEnrollment &lt; capacity
     </update>
 
     <!--넘어오는 값이 registration_no라서 서브쿼리 만들기-->
