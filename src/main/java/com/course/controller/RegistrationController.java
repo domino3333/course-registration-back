@@ -1,10 +1,9 @@
 package com.course.controller;
 
 
-import com.course.domain.Registration;
 import com.course.dto.registration.RegistrationResponse;
+import com.course.enums.RegistrationResult;
 import com.course.service.RegistrationService;
-import com.course.service.impl.RegistrationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.course.service.impl.RegistrationServiceImpl.*;
+import static com.course.enums.RegistrationResult.ALREADY_REGISTERED;
+import static com.course.enums.RegistrationResult.FULL;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +28,8 @@ public class RegistrationController {
     public ResponseEntity<?> registerLecture(Authentication authentication, @PathVariable long lectureNo){
 
         try {
-            int check = registrationService.registerLecture(authentication.getName(),lectureNo);
-            if(check == FAIL){
+            RegistrationResult check = registrationService.registerLecture(authentication.getName(),lectureNo);
+            if(check == ALREADY_REGISTERED){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 수강신청된 강의입니다.");
             }else if(check == FULL){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("정원이 초과된 강의입니다.");
