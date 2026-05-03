@@ -2,7 +2,6 @@ package com.course.service.impl;
 
 import com.course.service.QueueService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.connection.ReactiveZSetCommands;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
