@@ -19,7 +19,6 @@ public class QueueController {
     @PostMapping("/enter")
     public ResponseEntity<?> enterQueue(Authentication authentication){
         String email = authentication.getName();
-
         // 엔터 큐가 되자마자 바로 랭크를 계산해서 내려주기 위해 리턴을 rank로 받기
         Long rank = queueService.enterQueue(email);
 
