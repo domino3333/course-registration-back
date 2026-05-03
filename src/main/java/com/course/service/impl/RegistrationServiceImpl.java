@@ -40,7 +40,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         int updated = lectureMapper.checkCapacityAndIncreaseCurrentEnrollment(lectureNo);
         if (updated == 0) {
             //정원 초과인지 체크하면서 현 인원을 +1해서 실패했다면 0 리턴
-            //실패시 정원초과 리턴
             return FULL;
         }
         registrationMapper.registerLecture(member.getMemberNo(), lectureNo);

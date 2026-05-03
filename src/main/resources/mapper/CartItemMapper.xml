@@ -2,13 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.course.mapper.CartItemMapper">
 
+    <!--장바구니에서 아이템 불러오기-->
     <select id="getCartItemList">
-        select L.lecture_no,L.title,L.professor,L.capacity,L.currentEnrollment,L.credit from member M
-          join cart C on M.member_no = C.member_no
-          join cart_item CI on C.cart_no = CI.cart_no
-          join lecture L on L.lecture_no = CI.lecture_no where M.email = #{email}
+        select L.lecture_no, L.title, L.professor, L.capacity, L.currentEnrollment, L.credit
+        from member M
+                 join cart C on M.member_no = C.member_no
+                 join cart_item CI on C.cart_no = CI.cart_no
+                 join lecture L on L.lecture_no = CI.lecture_no
+        where M.email = #{email}
     </select>
 
+
+    <!--장바구니에 아이템 추가-->
     <insert id="addToCart">
         insert into cart_item(cart_item_no, cart_no, lecture_no)
         values (seq_cart_item.nextval,
@@ -20,11 +25,14 @@
 
     </insert>
 
+    <!--장바구니에서 아이템 삭제-->
     <delete id="deleteCartItem">
         delete
         from cart_item
-        where cart_no = (select cart_no from cart where member_no
-                                                            = (select member_no from member where email = #{email}))
+        where cart_no = (select cart_no
+                         from cart
+                         where member_no
+                                   = (select member_no from member where email = #{email}))
           and lecture_no = #{lectureNo}
     </delete>
 
