@@ -1,6 +1,7 @@
 package com.course.controller;
 
 
+import com.course.dto.queue.QueueStatusResponse;
 import com.course.service.QueueService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
@@ -43,6 +44,24 @@ public class QueueController {
         return ResponseEntity.ok("대기열에서 제거되었습니다.");
 
     }
+
+
+    @GetMapping("/status")
+    public ResponseEntity<?> getQueueStatus(Authentication authentication){
+
+        String email = authentication.getName();
+
+        QueueStatusResponse status = queueService.getQueueStatus(email);
+
+        return ResponseEntity.ok(status);
+    }
+
+
+
+
+
+
+
 }
 
 
