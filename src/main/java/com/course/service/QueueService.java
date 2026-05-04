@@ -8,5 +8,6 @@ public interface QueueService {
     Long getMyRank(String email);
     void leaveQueue(String email);
     QueueStatusResponse getQueueStatus(String email);
+    boolean admit(String email);
 
 }

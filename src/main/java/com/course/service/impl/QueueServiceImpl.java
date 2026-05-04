@@ -3,9 +3,10 @@ package com.course.service.impl;
 import com.course.dto.queue.QueueStatusResponse;
 import com.course.service.QueueService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -59,5 +60,29 @@ public class QueueServiceImpl implements QueueService {
         boolean allowed = rank <= MAX_ACTIVE_USERS;
 
         return new QueueStatusResponse(rank, waitingAhead, allowed);
+    }
+
+    @Override
+    public boolean admit(String email) {
+
+        // 내 순위 확인
+        Long rank = getMyRank(email);
+
+        //입장 불가능하면 false 반환
+        if(rank == null || rank > MAX_ACTIVE_USERS){
+            return false;
+        }
+
+        // 입장 가능하다면 대기 큐에서 삭제
+        stringRedisTemplate.opsForZSet().remove(LOGIN_QUEUE_KEY,email);
+
+        //입장 가능할 경우 ticket 만들어주기
+        // key는 ticket:123@naver.com 형태로 생성
+        String ticketKey = "ticket:" +email;
+        //set으로 스트링 자료구조 생성
+        stringRedisTemplate.opsForValue().set(ticketKey,"allowed",5, TimeUnit.MINUTES);
+
+
+        return true;
     }
 }
