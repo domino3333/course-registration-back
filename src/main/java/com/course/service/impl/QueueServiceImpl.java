@@ -13,7 +13,6 @@ public class QueueServiceImpl implements QueueService {
 
     private final StringRedisTemplate stringRedisTemplate;
     private final String LOGIN_QUEUE_KEY = "queue:login";
-    private final RedisTemplate<Object, Object> redisTemplate;
 
     @Override
     public Long enterQueue(String email) {
@@ -22,7 +21,7 @@ public class QueueServiceImpl implements QueueService {
         double score = System.currentTimeMillis();
 
         // ZADD queue:login score email와 같음
-        redisTemplate.opsForZSet().add(LOGIN_QUEUE_KEY,email,score);
+        stringRedisTemplate.opsForZSet().add(LOGIN_QUEUE_KEY,email,score);
 
         return getMyRank(email);
     }
@@ -31,7 +30,7 @@ public class QueueServiceImpl implements QueueService {
     public Long getMyRank(String email) {
 
         // ZRANK queue:login email와 같음
-        Long rank = redisTemplate.opsForZSet().rank(LOGIN_QUEUE_KEY,email);
+        Long rank = stringRedisTemplate.opsForZSet().rank(LOGIN_QUEUE_KEY,email);
 
         if(rank==null) return null;
 
@@ -41,6 +40,6 @@ public class QueueServiceImpl implements QueueService {
     @Override
     public void leaveQueue(String email) {
         //ZREM queue:login email와 같음
-        redisTemplate.opsForZSet().remove(LOGIN_QUEUE_KEY,email);
+        stringRedisTemplate.opsForZSet().remove(LOGIN_QUEUE_KEY,email);
     }
 }
