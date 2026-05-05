@@ -9,5 +9,6 @@ public interface QueueService {
     void leaveQueue(String email);
     QueueStatusResponse getQueueStatus(String email);
     boolean admit(String email);
+    boolean hasTicket(String email);
 
 }

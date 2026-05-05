@@ -118,6 +118,13 @@ public class QueueServiceImpl implements QueueService {
         return true;
     }
 
+    @Override
+    public boolean hasTicket(String email) {
+        Boolean hasKey = stringRedisTemplate.hasKey(TICKET_KEY_PREFIX+email);
+        //hasKey는 Boolean 객체를 반환하기 때문에 null 가능성, 따라서 아래처럼 비교함
+        return Boolean.TRUE.equals(hasKey);
+    }
+
 
     private long getActiveUserCount() {
         // active:login의 카디널리티
