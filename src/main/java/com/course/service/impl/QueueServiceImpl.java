@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
-
+/*
+* 1. 로그인 시 입장대기큐에 사용자를 집어넣는다.
+* 2. admit, status를 호출할 때마다 공석이 발생하고
+* 3. 입장한 사용자는 만료시간이 5분인 티켓을 발급받는다.
+* */
 @Service
 @RequiredArgsConstructor
 public class QueueServiceImpl implements QueueService {
@@ -109,7 +113,6 @@ public class QueueServiceImpl implements QueueService {
 
         //ticket:123@naver.com - allowed 티켓 생성
         stringRedisTemplate.opsForValue().set(TICKET_KEY_PREFIX + email, "allowed", TICKET_TTL_MINUTES, TimeUnit.MINUTES);
-
         return true;
     }
 
