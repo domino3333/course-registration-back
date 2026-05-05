@@ -132,9 +132,9 @@ public class QueueServiceImpl implements QueueService {
         stringRedisTemplate.opsForZSet().removeRangeByScore(ACTIVE_LOGIN_KEY, 0, now);
     }
 
-    //10초마다 active:login 유저들 정리
+    //10초마다 active:login 유저들 청소
     @Scheduled(fixedRate=10000)
-    private void cleanupExpiredActiveUsers(){
+    public void cleanupExpiredActiveUsers(){
         removeExpiredActiveUsers();
     }
 }
