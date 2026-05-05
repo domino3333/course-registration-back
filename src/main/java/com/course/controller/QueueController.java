@@ -61,6 +61,14 @@ public class QueueController {
         return ResponseEntity.ok(queueService.admit(authentication.getName()));
     }
 
+    @GetMapping("/ticket")
+    public ResponseEntity<?> hasTicket(Authentication authentication){
+        String email = authentication.getName();
+
+        boolean hasTicket = queueService.hasTicket(email);
+        return ResponseEntity.ok(hasTicket);
+
+    }
 
 
 

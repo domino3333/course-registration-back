@@ -120,6 +120,7 @@ public class QueueServiceImpl implements QueueService {
 
     @Override
     public boolean hasTicket(String email) {
+        // redis에 ticket:{email} 이 있는지 확인
         Boolean hasKey = stringRedisTemplate.hasKey(TICKET_KEY_PREFIX+email);
         //hasKey는 Boolean 객체를 반환하기 때문에 null 가능성, 따라서 아래처럼 비교함
         return Boolean.TRUE.equals(hasKey);
