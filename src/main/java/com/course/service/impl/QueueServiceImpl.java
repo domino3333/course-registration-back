@@ -4,6 +4,7 @@ import com.course.dto.queue.QueueStatusResponse;
 import com.course.service.QueueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -127,6 +128,13 @@ public class QueueServiceImpl implements QueueService {
     private void removeExpiredActiveUsers() {
         long now = System.currentTimeMillis();
         // 현재시간 전까지, 즉 만료된 사람들은 active유저에서 삭제
+        // 스코어가 0~now 인 사용자를 삭제하는 것임, score는 시간이야
         stringRedisTemplate.opsForZSet().removeRangeByScore(ACTIVE_LOGIN_KEY, 0, now);
+    }
+
+    //10초마다 active:login 유저들 정리
+    @Scheduled(fixedRate=10000)
+    private void cleanupExpiredActiveUsers(){
+        removeExpiredActiveUsers();
     }
 }
