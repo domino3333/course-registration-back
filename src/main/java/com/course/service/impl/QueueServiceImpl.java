@@ -111,6 +111,7 @@ public class QueueServiceImpl implements QueueService {
         //active:login에 사용자 추가
         stringRedisTemplate.opsForZSet().add(ACTIVE_LOGIN_KEY, email, expiresAt);
 
+
         //ticket:123@naver.com - allowed 티켓 생성
         stringRedisTemplate.opsForValue().set(TICKET_KEY_PREFIX + email, "allowed", TICKET_TTL_MINUTES, TimeUnit.MINUTES);
         return true;
