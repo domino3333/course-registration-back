@@ -52,6 +52,7 @@ public class QueueController {
 
     @PostMapping("/admit")
     public ResponseEntity<?> admit(Authentication authentication){
+        log.info("QueueController admit 진입:"+ authentication.getName());
         return ResponseEntity.ok(queueService.admit(authentication.getName()));
     }
 
