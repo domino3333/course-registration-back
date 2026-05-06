@@ -32,8 +32,14 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/lecture/**").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/api/lecture/**").authenticated()
+                        .requestMatchers("/api/cart/**").authenticated()
+                        .requestMatchers("/api/cartItem/**").authenticated()
+                        .requestMatchers("/api/member/**").authenticated()
+                        .requestMatchers("/api/queue/**").authenticated()
+                        .requestMatchers("/api/registration/**").authenticated()
+
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

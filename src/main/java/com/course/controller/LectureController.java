@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/api/lecture")
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class LectureController {
 
     private final LectureService lectureService;
