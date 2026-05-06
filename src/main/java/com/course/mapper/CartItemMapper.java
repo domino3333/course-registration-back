@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface CartItemMapper {
     List<CartItemResponse> getCartItemList(String email) throws Exception;
+    int checkIsAlreadyAddedInCart(String email,long lectureNo) throws Exception;
     void addToCart(String email, long lectureNo) throws Exception;
     void deleteCartItem(String email, long lectureNo) throws Exception;
 }

@@ -3,6 +3,7 @@ package com.course.service.impl;
 import com.course.domain.CartItem;
 import com.course.domain.Member;
 import com.course.dto.cart.CartItemResponse;
+import com.course.enums.CartResult;
 import com.course.mapper.CartItemMapper;
 import com.course.mapper.MemberMapper;
 import com.course.service.CartItemService;
@@ -26,8 +27,14 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public void addToCart(String email, long lectureNo) throws Exception {
+    public CartResult addToCart(String email, long lectureNo) throws Exception {
+
+        int num = cartItemMapper.checkIsAlreadyAddedInCart(email,lectureNo);
+        if(num>0){
+            return CartResult.ALREADY_REGISTERED;
+        }
         cartItemMapper.addToCart(email,lectureNo);
+        return CartResult.SUCCESS;
     }
 
     @Override
