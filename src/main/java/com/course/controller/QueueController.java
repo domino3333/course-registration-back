@@ -4,6 +4,7 @@ package com.course.controller;
 import com.course.dto.queue.QueueStatusResponse;
 import com.course.service.QueueService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/queue")
+@Slf4j
 public class QueueController {
 
     private final QueueService queueService;
@@ -56,7 +58,9 @@ public class QueueController {
     @GetMapping("/ticket")
     public ResponseEntity<?> hasTicket(Authentication authentication){
         String email = authentication.getName();
+        log.info("hasticket로그인포:"+email);
         boolean hasTicket = queueService.hasTicket(email);
+        log.info("hasTicket?:"+hasTicket);
         return ResponseEntity.ok(hasTicket);
 
     }
