@@ -31,7 +31,7 @@ public class LectureController {
             list = lectureService.getLectureList();
             log.info("list:" + list);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("getLectureList 에러발생");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("getLectureList 에러발생");
         }
 
         return ResponseEntity.ok(list);

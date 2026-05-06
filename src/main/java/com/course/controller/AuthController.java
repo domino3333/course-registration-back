@@ -37,7 +37,7 @@ public class AuthController {
             member = memberService.findMemberByEmail(request.getEmail());
         } catch (Exception e) {
             log.info("email에 해당하는 member가 존재하지 않습니다.");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("login에러");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("login 에러");
         }
 
         if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
@@ -60,7 +60,7 @@ public class AuthController {
         } catch (Exception e) {
             log.info("signUp 메서드 에러");
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 실패");
         }
 
         return ResponseEntity.ok("회원가입 성공");
@@ -74,7 +74,7 @@ public class AuthController {
             log.info("fetchMe 진입");
             member = memberService.findMemberByEmail(authentication.getName());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("fetchMe 오류 발생");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("fetchMe 오류 발생");
         }
 
         return ResponseEntity.ok(member);

@@ -34,7 +34,7 @@ public class CartItemController {
         try {
             list = cartItemService.getCartItemList(email);
         } catch (Exception e) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("getCartItemList실패");
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("getCartItemList 실패");
         }
         return ResponseEntity.ok(list);
     }
@@ -46,10 +46,10 @@ public class CartItemController {
         try {
             CartResult result = cartItemService.addToCart(email,lectureNo);
             if(result == CartResult.ALREADY_REGISTERED){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 장바구니에 있는 강의입니다.");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 장바구니에 있는 강의입니다.");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("addToCart 에러, catch문");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("addToCart 에러, catch문");
         }
         return ResponseEntity.ok("장바구니에 아이템 추가 성공");
     }
@@ -61,7 +61,7 @@ public class CartItemController {
         try {
             cartItemService.deleteCartItem(email,lectureNo);
         } catch (Exception e) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("deleteCartItem실패");
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("deleteCartItem 실패");
         }
         return ResponseEntity.ok("장바구니의 아이템 삭제 성공");
     }

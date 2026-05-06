@@ -30,13 +30,13 @@ public class RegistrationController {
         try {
             RegistrationResult check = registrationService.registerLecture(authentication.getName(),lectureNo);
             if(check == ALREADY_REGISTERED){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 수강신청된 강의입니다.");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 수강신청된 강의입니다.");
             }else if(check == FULL){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("정원이 초과된 강의입니다.");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("정원이 초과된 강의입니다.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("registerLecture 메서드 중 에러 발생");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("registerLecture 메서드 중 에러 발생");
 
         }
         return ResponseEntity.ok("수강신청 성공");
@@ -50,7 +50,7 @@ public class RegistrationController {
             log.info("getRegistrationList진입, auth:" + authentication.getName());
             list = registrationService.getRegistrationList(authentication.getName());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("등록된 강의 목록을 가져오지 못함");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("등록된 강의 목록을 가져오지 못함");
         }
         return ResponseEntity.ok(list);
 
@@ -63,7 +63,7 @@ public class RegistrationController {
             registrationService.cancelRegistration(authentication.getName(),registrationNo);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("수강 취소 실패");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수강 취소 실패");
         }
         return ResponseEntity.ok("수강 취소 성공");
     }
