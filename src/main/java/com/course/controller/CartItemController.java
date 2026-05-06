@@ -46,10 +46,10 @@ public class CartItemController {
         try {
             CartResult result = cartItemService.addToCart(email,lectureNo);
             if(result == CartResult.ALREADY_REGISTERED){
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 장바구니에 있는 강의입니다.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 장바구니에 있는 강의입니다.");
             }
         } catch (Exception e) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("addToCart 에러, catch문");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("addToCart 에러, catch문");
         }
         return ResponseEntity.ok("장바구니에 아이템 추가 성공");
     }

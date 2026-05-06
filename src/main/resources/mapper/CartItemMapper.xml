@@ -13,11 +13,13 @@
     </select>
 
 
-    <select id="checkIsAlreadyAddedInCart">
-    select * from member M
-        join cart C on M.member_no = C.member_no
-        join cart_item CI on C.cart_no = CI.cart_no
-        where M.email=#{email} and lecture_no = #{lectureNo}
+    <select id="checkIsAlreadyAddedInCart" resultType="int">
+        select count(*)
+        from member M
+                 join cart C on M.member_no = C.member_no
+                 join cart_item CI on C.cart_no = CI.cart_no
+        where M.email = #{email}
+          and CI.lecture_no = #{lectureNo}
     </select>
 
     <!--장바구니에 아이템 추가-->
