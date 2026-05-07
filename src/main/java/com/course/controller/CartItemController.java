@@ -27,7 +27,6 @@ public class CartItemController {
 
     @GetMapping
     public ResponseEntity<?> getCartItemList(Authentication authentication){
-        //todo로그인한 사용자의 장바구니 목록 가져오기
         String email = authentication.getName();
         log.info("getCartItemList에서 로그인한 사용자의 이메일:"+email);
         List<CartItemResponse> list = null;
