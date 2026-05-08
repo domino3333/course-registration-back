@@ -6,7 +6,7 @@ const BASE_URL = __ENV.BASE_URL || "http://localhost:8080";
 
 const USER_START_NO = Number(__ENV.USER_START_NO || 1);
 const USER_COUNT = Number(__ENV.USER_COUNT || 5000);
-const ARRIVAL_WINDOW_SECONDS = Number(__ENV.ARRIVAL_WINDOW_SECONDS || 900);
+const ARRIVAL_WINDOW_SECONDS = Number(__ENV.ARRIVAL_WINDOW_SECONDS || 60);
 const POLL_SECONDS = Number(__ENV.POLL_SECONDS || 2);
 const STAY_SECONDS = Number(__ENV.STAY_SECONDS || 10);
 const MAX_WAIT_FOR_ADMIT_SECONDS = Number(__ENV.MAX_WAIT_FOR_ADMIT_SECONDS || 21600);
@@ -25,7 +25,7 @@ export const queueWaitSeconds = new Trend("queue_wait_seconds");
 
 export const options = {
     scenarios: {
-        queue_5000_15m_flow: {
+        queue_5000_burst_flow: {
             executor: "per-vu-iterations",
             vus: USER_COUNT,
             iterations: 1,
