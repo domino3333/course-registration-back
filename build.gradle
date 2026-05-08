@@ -40,6 +40,10 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
+    // 스레드 모니터링을 위한 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 }
