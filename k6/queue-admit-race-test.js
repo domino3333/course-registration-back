@@ -3,8 +3,7 @@ import { check, sleep } from "k6";
 import { Counter } from "k6/metrics";
 
 const BASE_URL = "http://localhost:8080";
-const USER_COUNT = 50;
-
+const USER_COUNT = 200;
 export const admitTrueTotal = new Counter("admit_true_total");
 export const admitFalseTotal = new Counter("admit_false_total");
 
@@ -97,5 +96,5 @@ export default function (data) {
         admitFalseTotal.add(1);
     }
 
-    console.log(`${user.email} admit=${admitted}`);
+    //console.log(`${user.email} admit=${admitted}`);
 }
