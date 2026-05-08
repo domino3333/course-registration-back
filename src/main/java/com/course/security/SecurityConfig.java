@@ -38,8 +38,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/member/**").authenticated()
                         .requestMatchers("/api/queue/**").authenticated()
                         .requestMatchers("/api/registration/**").authenticated()
-
-                        .anyRequest().authenticated()
+                        .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
