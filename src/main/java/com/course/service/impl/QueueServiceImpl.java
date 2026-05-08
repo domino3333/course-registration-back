@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 /*
-* 1. 로그인 시 입장대기큐에 사용자를 집어넣는다.
-* 2. admit, status를 호출할 때마다 공석이 발생하고
-* 3. 입장한 사용자는 만료시간이 5분인 티켓을 발급받는다.
-* */
+ * 1. 로그인 시 입장대기큐에 사용자를 집어넣는다.
+ * 2. admit, status를 호출할 때마다 공석이 발생하고
+ * 3. 입장한 사용자는 만료시간이 5분인 티켓을 발급받는다.
+ * */
 @Service
 @RequiredArgsConstructor
 public class QueueServiceImpl implements QueueService {
@@ -70,7 +70,7 @@ public class QueueServiceImpl implements QueueService {
         Long rank = getMyRank(email);
 
         if (rank == null) {
-            return new QueueStatusResponse(null, null, false);
+            return new QueueStatusResponse(null, null, false,0L);
         }
 
         long activeCount = getActiveUserCount();
@@ -79,7 +79,9 @@ public class QueueServiceImpl implements QueueService {
         Long waitingAhead = rank - 1;
         boolean allowed = availableSeats > 0 && rank <= availableSeats;
 
-        return new QueueStatusResponse(rank, waitingAhead, allowed);
+        long nextPollMillis = calculateNextPollMillis(waitingAhead, allowed);
+
+        return new QueueStatusResponse(rank, waitingAhead, allowed, nextPollMillis);
     }
 
     @Override
@@ -121,7 +123,7 @@ public class QueueServiceImpl implements QueueService {
     @Override
     public boolean hasTicket(String email) {
         // redis에 ticket:{email} 이 있는지 확인
-        Boolean hasKey = stringRedisTemplate.hasKey(TICKET_KEY_PREFIX+email);
+        Boolean hasKey = stringRedisTemplate.hasKey(TICKET_KEY_PREFIX + email);
         //hasKey는 Boolean 객체를 반환하기 때문에 null 가능성, 따라서 아래처럼 비교함
         return Boolean.TRUE.equals(hasKey);
     }
@@ -141,8 +143,22 @@ public class QueueServiceImpl implements QueueService {
     }
 
     //10초마다 active:login 유저들 청소
-    @Scheduled(fixedRate=10000)
-    public void cleanupExpiredActiveUsers(){
+    @Scheduled(fixedRate = 10000)
+    public void cleanupExpiredActiveUsers() {
         removeExpiredActiveUsers();
+    }
+
+    private long calculateNextPollMillis(Long waitingAhead, boolean allowed) {
+
+        if (allowed) {
+            return 0;
+        } else if (waitingAhead == null) {
+            return 10000;
+        } else if (waitingAhead <= 50) {
+            return 2000;
+        } else if (waitingAhead <= 200) {
+            return 10000;
+        }
+        return 10000;
     }
 }

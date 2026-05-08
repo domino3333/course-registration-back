@@ -11,5 +11,6 @@ public class QueueStatusResponse {
     private Long rank;
     private Long waitingAhead;
     private boolean allowed;
+    private long nextPollMillis;
 
 }
