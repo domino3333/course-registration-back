@@ -156,8 +156,6 @@ public class QueueServiceImpl implements QueueService {
             return 10000;
         } else if (waitingAhead <= 50) {
             return 2000;
-        } else if (waitingAhead <= 200) {
-            return 10000;
         }
         return 10000;
     }
