@@ -32,7 +32,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 
 
-        Member member = null;
+        Member member;
         try {
             member = memberService.findMemberByEmail(request.getEmail());
         } catch (Exception e) {
